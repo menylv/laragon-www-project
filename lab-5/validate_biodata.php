@@ -79,5 +79,115 @@ if ($data['matricnum'] == '') {
     $errors[] = "Please insert your matric number.";
 }
 
+if (!empty($errors)) {
+  echo "<h2>Validation Errors</h2>";
+  echo "<ul>";
+ 
+  foreach ($errors as $error) {
+      echo "<li>" . $error . "</li>";
+  }
+ 
+  echo "</ul>";
+ 
+  echo count($errors) . " error(s) detected.";
+  exit();
+}
 
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Validate Biodata</title>
+</head>
+<body>
+
+    <h1>Validate Biodata</h1>
+
+    <p>Please review your biodata before saving.</p>
+
+    <form action="save_biodata.php" method="post">
+
+    <?php foreach ($data as $key => $value): ?>
+    <input type="hidden" name="<?= $key ?>" value="<?= htmlspecialchars($value ?? '', ENT_QUOTES) ?>">
+    <?php endforeach; ?>
+
+        <table border="1" cellpadding="10">
+
+            <tr>
+                <td>Name</td>
+                <td><?= $data['name']; ?></td>
+            </tr>
+
+            <tr>
+                <td>Age</td>
+                <td><?= $data['age']; ?></td>
+            </tr>
+
+            <tr>
+                <td>Gender</td>
+                <td><?= $data['gender']; ?></td>
+            </tr>
+
+            <tr>
+                <td>Address</td>
+                <td><?= $data['address']; ?></td>
+            </tr>
+
+            <tr>
+                <td>Email</td>
+                <td><?= $data['email']; ?></td>
+            </tr>
+
+            <tr>
+                <td>Date of Birth</td>
+                <td><?= date("d-m-Y", strtotime($data['dob'])); ?></td>
+            </tr>
+
+            <tr>
+                <td>Height</td>
+                <td><?= $data['height']; ?> cm</td>
+            </tr>
+
+            <tr>
+                <td>Phone Number</td>
+                <td><?= $data['phone']; ?></td>
+            </tr>
+
+            <tr>
+                <td>Favourite Colour</td>
+                <td><?= $data['color']; ?></td>
+            </tr>
+
+            <tr>
+                <td>Social Media URL</td>
+                <td><?= $data['fbtwig']; ?></td>
+            </tr>
+
+            <tr>
+                <td>Photo</td>
+                <td><?= $data['photo']; ?></td>
+            </tr>
+
+            <tr>
+                <td>University</td>
+                <td><?= $data['university']; ?></td>
+            </tr>
+
+            <tr>
+                <td>Matric Number</td>
+                <td><?= $data['matricnum']; ?></td>
+            </tr>
+
+        </table>
+        <br><br>
+
+        <button type="button" onclick="history.back()">Back</button>
+
+        <input type="submit" name="biodata_validate" value="Save My Biodata">
+
+    </form>
+
+</body>
+</html>
+
