@@ -1,92 +1,83 @@
-<!--
-Matric Number: A223717
-Name: AMNI NAJLAA
--->
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Biodata</title>
-</head>
-<body>
-<h1>Biodata Form</h1>
-<hr>
-<form action="http://lrgs.ftsm.ukm.my/users/a123456/lab-2/validate_biodata.php" method="post" enctype="multipart/form-data">
-  <table border="1" cellpadding="10">
-    <tr>
-      <td>Name:</td>
-      <td><input type="text" name="name" placeholder="Insert your name" autofocus required
-                 pattern="[A-Z][a-z ]+(\s[A-Z][a-z ]+)*" title="Name must be in Title Case"></td>
-    </tr>
-    <tr>
-      <td>Age:</td>
-      <td><input type="number" name="age" min="0" max="100" step="1" required></td>
-    </tr>
-    <tr>
-      <td>Gender:</td>
-      <td><input type="radio" name="gender" id="male" value="male" checked required><label for="male">Male</label>
-          <input type="radio" name="gender" id="female" value="female" required><label for="female">Female</label></td>
-    </tr>
-    <tr>
-      <td>Address:</td>
-      <td><textarea name="address" cols="50" rows="5" placeholder="Insert your address" required></textarea></td>
-    </tr>
-    <tr>
-      <td>Email:</td>
-      <td><input type="email" name="email" id="emailId" required
-                 pattern="[^@\s]+@[^@\s]*ukm[^@\s]*"
-                 title="Email must contain the word ukm"></td>
-    </tr>
-    <tr>
-      <td>Date of Birth:</td>
-      <td><input type="date" name="dob" id="dobId" required></td>
-    </tr>
-
-    <tr>
-      <td>Height:</td>
-      <td><input type="range" name="height" id="heightId" min="100" max="200" value="150" oninput="outputId.value = heightId.value"><output id="outputId">150</output>cm</td>
-    </tr>
-     <tr>
-      <td>Phone Number:</td>
-      <td><input type="tel" name="phone" id="phoneId" placeholder="+60##-#######" required
-                 pattern="(\+60|0060)[0-9]{1,2}-?[0-9]{7,8}"
-                 title="Must begin with +60 or 0060"></td>
-    </tr>
-    <tr>
-      <td>My favourite color:</td>
-      <td><input type="color" name="color" id="colorId" value="#008000" required></td>
-    </tr>
-    <tr>
-      <td>FB/TW/IG:</td>
-      <td><input type="url" name="fbtwig" id="fbtwigId" placeholder="Insert the URL" required></td>
-    </tr>
-    <tr>
-      <td>My Face photo:</td>
-      <td><input type="file" name="photo" id="photoId" accept="image/*" required></td>
-    </tr>
-    <tr>
-      <td>My University:</td>
-      <td>
-        <select name="university" placeholder="Insert your university name" required>
-          <option value="">Select your university</option>
-          <option value="UM">University of Malaya</option>
-          <option value="UPM">University Putra Malaysia</option>
-          <option value="USM">University Sains Malaysia</option>
-          <option value="UIAM">International Islamic University Malaysia</option>
-          <option value="UTM">University Technology Malaysia</option>
-          <option value="UTP">University Technology Petronas</option>
-          <option value="UUM">University Utara Malaysia</option>
-          <option value="UTHM">University Tun Hussein Onn Malaysia</option>
-          <option value="UKM" selected>Universiti Kebangsaan Malaysia</option>
-        </select>
-      </td>
-    </tr>
-  </table>
-<hr>
-<input type="hidden" name="matricnum" value="A223717">
-<button type="submit" name="biodata_form" value="Submit My Biodata">Submit My Biodata
-</button>
-<input type="reset" name="reset_form" value="Reset Form">
-</form>
+<?php
  
-</body>
-</html>
+if ($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_POST['biodata_form'])) {
+    exit("Invalid access.");
+}
+ $valid_universities = ["UPM", "UKM", "UM", "USM", "UTM"];
+
+$data = [
+    "name"       => trim($_POST['name'] ?? ''),
+    "age"        => trim($_POST['age'] ?? ''),
+    "gender"     => trim($_POST['gender'] ?? ''),
+    "address"    => trim($_POST['address'] ?? ''),
+    "email"      => trim($_POST['email'] ?? ''),
+    "dob"        => trim($_POST['dob'] ?? ''),
+    "height"     => trim($_POST['height'] ?? ''),
+    "phone"      => trim($_POST['phone'] ?? ''),
+    "color"      => trim($_POST['color'] ?? ''),
+    "fbtwig"     => trim($_POST['fbtwig'] ?? ''),
+    "photo"      => $_FILES['photo']['name'] ?? null,
+    "university" => $_POST['university'] ?? '',
+    "matricnum"  => trim($_POST['matricnum'] ?? '')
+];
+
+$errors = [];
+
+if ($data['name'] == '') {
+    $errors[] = "Please insert your name.";
+}
+
+if ($data['age'] == '' || !filter_var($data['age'], FILTER_VALIDATE_INT) && $data['age'] !== '0' || $data['age'] < 0 || $data['age'] > 100) {
+    $errors[] = "Age must be an integer between 0 and 100.";
+}
+
+if (!in_array($data['gender'], ['male', 'female'], true)) {
+    $errors[] = "Please select a valid sex.";
+}
+
+if ($data['address'] == '') {
+    $errors[] = "Please insert your address.";
+} elseif (strlen($data['address']) > 255) {
+    $errors[] = "Address cannot exceed 255 characters.";
+}
+
+if (!preg_match('/.+@.*[Uu][Kk][Mm].*/', $data['email'])) {
+    $errors[] = "Please enter a valid email address.";
+}
+
+$date = date('Y-m-d', strtotime($data['dob']));
+
+if (!$date) {
+    $errors[] = "Please enter a valid date of birth.";
+}
+
+if ($data['height'] == '' || !is_numeric($data['height']) || $data['height'] < 100 || $data['height'] > 200) {
+    $errors[] = "Height must be between 100 and 200 cm.";
+}
+
+if (!preg_match('/^\+60\d{2}-\d{7}$/', $data['phone'])) {
+    $errors[] = "Phone number must follow +60##-####### format.";
+}
+
+if (!preg_match('/^#[a-fA-F0-9]{6}$/', $data['color'])) {
+    $errors[] = "Please select a valid colour.";
+}
+
+if ($data['fbtwig'] == '') {
+    $errors[] = "Please enter a valid URL.";
+}
+
+if ($data['photo'] == '') {
+    $errors[] = "Select a valid photo.";
+}
+
+if (!in_array($data['university'], $valid_universities, true)) {
+    $errors[] = "Please select a valid university.";
+}
+
+if ($data['matricnum'] == '') {
+    $errors[] = "Please insert your matric number.";
+}
+
+
+?>
