@@ -12,7 +12,7 @@
                    data-bs-toggle="offcanvas"
                    data-bs-target="#mySidebar">
                     <i class="bi bi-list"></i>
-                    <h5 class="ms-3 d-inline">My Company</h5>
+                    <h5 class="ms-3 d-inline">PetCarry</h5>
                 </a>
             </div>
 

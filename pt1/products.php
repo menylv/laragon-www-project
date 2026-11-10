@@ -1,3 +1,4 @@
+
 <?php
 ob_start();
 ?>
@@ -5,13 +6,13 @@ ob_start();
 <div class="card shadow border-0 border-start border-5 border-primary mb-4">
     <div class="card-body">
         <h2 class="mb-1">Products</h2>
-        <p class="text-muted mb-0">Manage and track all your products</p>
+        <p class="text-muted mb-0">Manage and track all your pet carrier products</p>
     </div>
 </div>
  
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <!-- Form Header -->
+      
         <div class="row g-0 align-items-center mb-3">
             <div class="col">
                 <h5 class="mb-0">
@@ -33,52 +34,72 @@ ob_start();
                     <label for="pid" class="form-label">Product ID <span class="text-danger" aria-hidden="true">*</span></label>
                     <input name="product_num" id="pid" type="text" class="form-control" placeholder="Enter Product ID" value="" required>
                 </div>
+
                 <div class="col-md-3">
                     <label for="name" class="form-label">Name <span class="text-danger" aria-hidden="true">*</span></label>
                     <input name="product_name" id="name" type="text" class="form-control" placeholder="Enter Product Name" value="" required>
                 </div>
+
+                  <!-- chatgpt -->
                 <div class="col-md-3">
-                    <label for="price" class="form-label">Price <span class="text-danger" aria-hidden="true">*</span></label>
+                    <label for="type" class="form-label">Type <span class="text-danger" aria-hidden="true">*</span></label>
+                    <select name="product_type" id="type" class="form-select" required>
+                        <option value="">Select Type</option>
+                        <option value="Bubble Carrier">Bubble Carrier</option>
+                        <option value="Mesh Carrier">Mesh Carrier</option>
+                        <option value="Expandable Carrier">Expandable Carrier</option>
+                        <option value="Front Carrier">Front Carrier</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="size" class="form-label">Size <span class="text-danger" aria-hidden="true">*</span></label>
+                    <select name="product_size" id="size" class="form-select" required>
+                        <option value="">Select Size</option>
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Large">Large</option>
+                    </select>
+                </div>
+                  <!-- chatgpt ended -->
+                <div class="col-md-3">
+                    <label for="colour" class="form-label">Colour <span class="text-danger" aria-hidden="true">*</span></label>
+                    <select name="product_colour" id="colour" class="form-select" required>
+                        <option value="">Select Colour</option>
+                        <option value="Black">Black</option>
+                        <option value="Pink">Pink</option>
+                        <option value="Grey">Grey</option>
+                        <option value="Beige">Red</option>
+                        <option value="Blue">Blue</option>
+                    </select>
+                </div>
+ 
+                <div class="col-md-3">
+                    <label for="material" class="form-label">Material <span class="text-danger" aria-hidden="true">*</span></label>
+                    <select name="product_material" id="material" class="form-select" required>
+                        <option value="">Select Material</option>
+                        <option value="Oxford Fabric">Oxford Fabric</option>
+                        <option value="Polyester">Polyester</option>
+                        <option value="PC">PC</option>
+                        <option value="Canvas">Canvas</option>
+                    </select>
+                </div>
+                 
+                <div class="col-md-3">
+                    <label for="weight_capacity" class="form-label">Weight Capacity (kg) <span class="text-danger" aria-hidden="true">*</span></label>
+                    <input name="product_weight_capacity" id="weight_capacity" type="number" class="form-control" placeholder="Enter Weight Capacity" value="" required min="0.1" step="0.1">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="price" class="form-label">Price (RM) <span class="text-danger" aria-hidden="true">*</span></label>
                     <input name="product_price" id="price" type="number" class="form-control" placeholder="Enter Price" value="" required min="0" step="0.01">
-                </div>
-                <div class="col-md-3">
-                    <label for="brand" class="form-label">Brand <span class="text-danger" aria-hidden="true">*</span></label>
-                    <select name="product_brand" id="brand" class="form-select" required>
-                        <option value="">Select Brand</option>
-                        <option value="Cervelo">Cervelo</option>
-                        <option value="Geometric">Geometric</option>
-                        <option value="Tecc">Tecc</option>
-                        <option value="Nosh">Nosh</option>
-                    </select>
-                </div>
- 
-                <div class="col-md-3">
-                    <label for="product_condition" class="form-label">Condition <span class="text-danger" aria-hidden="true">*</span></label>
-                    <select name="product_condition" id="product_condition" class="form-select" required>
-                        <option value="">Select Condition</option>
-                        <option value="New">New</option>
-                        <option value="Used">Used</option>
-                    </select>
-                </div>
- 
-                <div class="col-md-3">
-                    <label for="year" class="form-label">Manufacturing Year <span class="text-danger" aria-hidden="true">*</span></label>
-                    <select name="product_year" id="year" class="form-select" required>
-                        <option value="">Select Year</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
-                    </select>
                 </div>
                  
                 <div class="col-md-3">
                     <label for="quantity" class="form-label">Quantity <span class="text-danger" aria-hidden="true">*</span></label>
                     <input name="product_quantity" id="quantity" type="number" class="form-control" placeholder="Enter Quantity" value="" required min="0">
                 </div>
+
                 <div class="col-md-3">
                     <label for="product_image" class="form-label">Image</label>
                     <input name="product_image" id="product_image" type="text" class="form-control" placeholder="Enter image filename" value="">
@@ -123,17 +144,19 @@ ob_start();
                     <tr>
                         <th>Product ID</th>
                         <th>Name</th>
+                        <th>Type</th>
+                        <th>Size</th>
                         <th>Price</th>
-                        <th>Brand</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>P001</td>
-                        <td>Road Bike</td>
-                        <td>$1,200.00</td>
-                        <td>Cervelo</td>
+                        <td>Bubble Pet Carrier Backpack</td>
+                        <td>Bubble Carrier</td>
+                        <td>Medium</td>
+                        <td>RM89.90</td>
                         <td>
                             <a href="#" class="btn btn-sm btn-warning">
                                 <i class="bi bi-pencil"></i>
@@ -147,7 +170,7 @@ ob_start();
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5" class="text-center">No products found</td>
+                        <td colspan="6" class="text-center">No products found</td>
                     </tr>
                 </tbody>
             </table>
