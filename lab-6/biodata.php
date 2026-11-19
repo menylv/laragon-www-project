@@ -2,9 +2,7 @@
 Matric Number: A223717
 Name: AMNI NAJLAA
 -->
-<?php
-require_once "db.php";
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
